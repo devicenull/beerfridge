@@ -27,16 +27,24 @@ if (isset($_POST['action']) && $_POST['action'] == 'update_beer')
 	{
 		if ($beer->add($params))
 		{
-			Header('Location: /');
-			exit();
+			displaySuccess('Added '.$params['name'], '/');
+		}
+		else
+		{
+			displayError('Failed: '.$beer->error);
+			// cheating to preserve the data
+			$beer->record = $params;
 		}
 	}
 	else
 	{
 		if ($beer->set($params))
 		{
-			Header('Location: /');
-			exit();
+			displaySuccess('Updated '.$beer['name'], '/');
+		}
+		else
+		{
+			displayError('Failed: '.$beer->error);
 		}
 	}
 }

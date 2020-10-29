@@ -8,6 +8,9 @@ class BaseDBObject implements ArrayAccess
 	// Full list of all DB fields (including primary key)
 	var $fields = [];
 
+	// last error message encountered
+	var $error = '';
+
 	var $record = [];
 
 	public function __construct($params=[])
@@ -27,9 +30,10 @@ class BaseDBObject implements ArrayAccess
 		}
 	}
 
-	public function set(array $params)
+	public function set(array $params): bool
 	{
 		global $db;
+		$this->error = '';
 
 		$update = [];
 		foreach ($this->fields as $field)
@@ -44,16 +48,22 @@ class BaseDBObject implements ArrayAccess
 
 		if (count($update) > 0)
 		{
-			return $db->Execute('update '.$this->db_table.' set '.implode(', ', $update).' where '.$this->db_key.'=?', [$this->record[$this->db_key]]);
+			if (!$db->Execute('update '.$this->db_table.' set '.implode(', ', $update).' where '.$this->db_key.'=?', [$this->record[$this->db_key]]))
+			{
+				$this->error = $db->errorMsg();
+				return false;
+			}
+			return true;
 		}
 
 		// nothing changed?
 		return true;
 	}
 
-	public function add(array $params)
+	public function add(array $params): bool
 	{
 		global $db;
+		$this->error = '';
 
 		$add_cols = [];
 		$add_vals = [];
@@ -70,18 +80,32 @@ class BaseDBObject implements ArrayAccess
 
 		if (count($add_cols) > 0)
 		{
-			return $db->Execute('insert into '.$this->db_table.'('.implode(',', $add_cols).') values('.implode(', ', $add_vals).')');
+			if (!$db->Execute('insert into '.$this->db_table.'('.implode(',', $add_cols).') values('.implode(', ', $add_vals).')'))
+			{
+				$this->error = $db->ErrorMsg();
+				return false;
+			}
+
+			return true;
 		}
 
 		// no data provided?
+		$this->error = 'no data provided';
 		return false;
 	}
 
 	public function delete(): bool
 	{
 		global $db;
-		
-		return (bool)$db->Execute('delete from '.$this->db_table.' WHERE '.$this->db_key.'=?', [$this->record[$this->db_key]]);
+		$this->error = '';
+
+		if (!$db->Execute('delete from '.$this->db_table.' WHERE '.$this->db_key.'=?', [$this->record[$this->db_key]]))
+		{
+			$this->error = $db->ErrorMsg();
+			return false;
+		}
+
+		return true;
 	}
 
 	public function offsetExists($offset)

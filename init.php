@@ -32,12 +32,18 @@ function displayPage($template, $vars=[])
 		unset($_SESSION['success_message']);
 	}
 
+	if (isset($_SESSION['error_message']))
+	{
+		$vars['error_message'] = $_SESSION['error_message'];
+		unset($_SESSION['error_message']);
+	}	
+
 	echo $twig->render($template, $vars);
 }
 
 function displaySuccess(string $message, string $redirect='')
 {
-	if ($redirect='')
+	if ($redirect != '')
 	{
 		$_SESSION['success_message'] = $message;
 		Header('Location: '.$redirect);
@@ -45,4 +51,16 @@ function displaySuccess(string $message, string $redirect='')
 	}
 
 	$_SESSION['success_message'] = $message;
+}
+
+function displayError(string $message, string $redirect='')
+{
+	if ($redirect != '')
+	{
+		$_SESSION['error_message'] = $message;
+		Header('Location: '.$redirect);
+		exit();
+	}
+
+	$_SESSION['error_message'] = $message;
 }
