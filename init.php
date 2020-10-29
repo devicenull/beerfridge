@@ -7,8 +7,12 @@ $twig = new \Twig\Environment($loader, [
 	'cache' => false,
 	'auto_reload' => true,
 	'strict_variables' => true,
-	'autoescape' => true,
+	'autoescape' => 'html',
 ]);
+
+require_once(__DIR__.'/classes/BaseDBObject.php');
+require_once(__DIR__.'/classes/Brewery.php');
+require_once(__DIR__.'/classes/Beer.php');
 
 require_once(__DIR__.'/config.php');
 

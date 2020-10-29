@@ -1,6 +1,28 @@
 {% extends 'layout.html' %}
 
 {% block maincontent %}
-    <h1 class="mt-5">Hello World</h1>
-    <p class="lead">Beer</p>
+    <h1 class="mt-5">Beer Inventory</h1>
+    <table class="table">
+    	<thead>
+    		<tr>
+	    		<th scope="col">Name</th>
+	    		<th scope="col">Brewery</th>
+	    		<th scope="col">ABV</th>
+	    		<th scope="col">Style</th>
+	    		<th scope="col">#</th>
+	    	</tr>
+    	</thead>
+    	<tbody>
+    		{% for cur in beers %}
+    		<tr>
+    			<td scope="row">{{ cur.name }}</td>
+    			<td scope="row">{{ cur.getObject('BREWERYID').name }}</td>
+    			<td scope="row">{{ cur.abv }}%</td>
+    			<td scope="row">{{ cur.style }}</td>
+    			<td scope="row">{{ cur.count_available }}</td>
+    		</tr>
+    		{% endfor %}
+	    </tbody>
+    </table>
+
 {% endblock %}
