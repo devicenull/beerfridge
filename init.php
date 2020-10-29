@@ -20,9 +20,29 @@ require_once(__DIR__.'/vendor/adodb/adodb-php/adodb.inc.php');
 $db = newAdoConnection('mysqli');
 $db->connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 
+session_start();
+
 function displayPage($template, $vars=[])
 {
 	global $twig;
 
+	if (isset($_SESSION['success_message']))
+	{
+		$vars['success_message'] = $_SESSION['success_message'];
+		unset($_SESSION['success_message']);
+	}
+
 	echo $twig->render($template, $vars);
+}
+
+function displaySuccess(string $message, string $redirect='')
+{
+	if ($redirect='')
+	{
+		$_SESSION['success_message'] = $message;
+		Header('Location: '.$redirect);
+		exit();
+	}
+
+	$_SESSION['success_message'] = $message;
 }

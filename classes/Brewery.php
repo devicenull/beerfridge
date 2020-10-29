@@ -6,22 +6,21 @@ class Brewery extends BaseDBObject
 		'name',
 	];
 	var $record = [];
+	var $db_key = 'BREWERYID';
+	var $db_table = 'brewery';
 
-	public function __construct($params=[])
+	public static function getAll()
 	{
 		global $db;
-		
-		if (isset($params['BREWERYID']))
+
+		$breweries = [];
+
+		$res = $db->Execute('select * from brewery order by name');
+		foreach ($res as $cur)
 		{
-			$res = $db->Execute('select * from brewery where BREWERYID=?', [$params['BREWERYID']]);
-			if ($res->RecordCount() > 0)
-			{
-				$this->record = $res->fields;
-			}
-		}
-		else
-		{
-			parent::__construct($params);
-		}
+			$breweries[] = new Brewery(['record' => $cur]);
+		} 
+
+		return $breweries;
 	}
 }

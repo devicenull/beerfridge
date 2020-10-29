@@ -10,6 +10,7 @@
 	    		<th scope="col">ABV</th>
 	    		<th scope="col">Style</th>
 	    		<th scope="col">#</th>
+	    		<th scope="col"></th>
 	    	</tr>
     	</thead>
     	<tbody>
@@ -20,9 +21,18 @@
     			<td scope="row">{{ cur.abv }}%</td>
     			<td scope="row">{{ cur.style }}</td>
     			<td scope="row">{{ cur.count_available }}</td>
+    			<td scope="row">
+    				<a class="btn btn-primary" href="/beer_edit.php?BEERID={{ cur.BEERID }}">edit</a>
+    				<form style="display: inline" onsubmit="confirm('Are you sure you want to delete {{ cur.name }}?')" method="POST">
+    					<input type="hidden" name="action" value="delete_beer">
+    					<input type="hidden" name="BEERID" value="{{ cur.BEERID }}">
+    					<button class="btn btn-danger">del</button>
+    				</form>
+    			</td>
     		</tr>
     		{% endfor %}
 	    </tbody>
     </table>
+    <a href="/beer_edit.php?BEERID=new" class="btn btn-primary" style="float: right">Add Beer</a>
 
 {% endblock %}

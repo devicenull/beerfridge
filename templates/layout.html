@@ -3,14 +3,11 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Sticky Footer Template · Bootstrap</title>
+    <title>Beer Fridge</title>
 
-    <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/sticky-footer/">
+    <link href="/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
-<link href="/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-
-<meta name="theme-color" content="#563d7c">
-
+    <meta name="theme-color" content="#563d7c">
 
     <style>
       .bd-placeholder-img {
@@ -28,16 +25,18 @@
         }
       }
 
-.footer {
-  background-color: #f5f5f5;
-}      
+    .footer {
+      background-color: #f5f5f5;
+    }      
     </style>
-    <!-- Custom styles for this template -->
-    <link href="sticky-footer.css" rel="stylesheet">
   </head>
   <body class="d-flex flex-column h-100">
-    <!-- Begin page content -->
 <main role="main" class="flex-shrink-0">
+  {% if success_message|default() != '' %}
+    <div class="alert alert-success" role="alert">
+      {{ success_message }}
+    </div>
+  {% endif %}
   <div class="container">
     {% block maincontent %}
     {% endblock %}
@@ -46,7 +45,11 @@
 
 <footer class="footer mt-auto py-3">
   <div class="container">
-    <span class="text-muted">Place sticky footer content here.</span>
+    <form method="POST" style="display: inline;">
+      <input type="hidden" name="action" value="scanned">
+      <input type="text" name="barcode">
+    </form>
+    <span class="text-muted">Drink all the booze</span>
   </div>
 </footer>
 </body>

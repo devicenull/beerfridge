@@ -10,14 +10,8 @@ class Beer extends BaseDBObject
 		'count_available',
 	];
 	var $record = [];
-
-	public function __constract($params=[])
-	{
-		if (isset($params['record']))
-		{
-			$this->record = $params['record'];
-		}
-	}
+	var $db_key = 'BEERID';
+	var $db_table = 'beer';
 
 	public static function getAvailable()
 	{

@@ -1,0 +1,48 @@
+{% extends 'layout.html' %}
+
+{% block maincontent %}
+	{% if BEERID == "new" %}
+	    <h1 class="mt-5">Add Beer</h1>
+	{% else %}
+		<h1 class="mt-5">Edit {{ beer.name }}</h1>
+	{% endif %}
+
+	<form method="POST">
+		<input type="hidden" name="action" value="update_beer">
+		<div class="form-group">
+			<label for="name">Beer Name</label>
+			<input type="text" class="form-control" name="name" value="{{ beer.name }}">
+		</div>
+
+		<div class="form-group">
+			<label for="name">Brewery</label>
+			<select class="form-control" name="BREWERYID">
+				{% for cur in breweries %}
+					<option value="{{ cur.BREWERYID }}" {% if cur.BREWERYID == beer.BREWERYID %}selected{% endif %}>{{ cur.name }}</option>
+				{% endfor %}
+			</select>
+
+		</div>
+
+		<div class="form-group">
+			<label for="name">ABV</label>
+			<input type="number" step="any" class="form-control" name="abv" value="{{ beer.style }}">
+		</div>		
+
+		<div class="form-group">
+			<label for="name">Style</label>
+			<input type="text" class="form-control" name="style" value="{{ beer.style }}">
+		</div>		
+
+		<div class="form-group">
+			<label for="name">Count Available</label>
+			<input type="number" class="form-control" name="count_available" value="{{ beer.count_available }}">
+		</div>		
+
+		{% if BEERID == "new" %}
+			<button class="btn btn-primary">Add</button>
+		{% else %}
+			<button class="btn btn-primary">Update</button>
+		{% endif %}
+	</form>
+{% endblock %}
