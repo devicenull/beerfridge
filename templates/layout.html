@@ -27,7 +27,7 @@
 
     .footer {
       background-color: #f5f5f5;
-    }      
+    }
     </style>
   </head>
   <body class="d-flex flex-column h-100">
@@ -41,7 +41,7 @@
     <div class="alert alert-danger" role="alert">
       {{ error_message }}
     </div>
-  {% endif %}  
+  {% endif %}
   <div class="container">
     {% block maincontent %}
     {% endblock %}
@@ -50,9 +50,9 @@
 
 <footer class="footer mt-auto py-3">
   <div class="container">
-    <form method="POST" style="display: inline;">
+    <form method="POST" action="/barcode.php" style="display: inline;">
       <input type="hidden" name="action" value="scanned">
-      <input type="text" name="barcode">
+      <input type="text" name="barcode" autocomplete="barcode">
     </form>
     <span class="text-muted">Drink all the booze</span>
   </div>

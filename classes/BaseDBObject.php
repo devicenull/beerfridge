@@ -30,6 +30,11 @@ class BaseDBObject implements ArrayAccess
 		}
 	}
 
+	public function isInitialized(): bool
+	{
+		return isset($this->record[$this->db_key]);
+	}
+
 	public function set(array $params): bool
 	{
 		global $db;
@@ -112,19 +117,19 @@ class BaseDBObject implements ArrayAccess
 	{
 		return in_array($offset, $this->fields);
 	}
-	
-	public function offsetGet($offset) 
+
+	public function offsetGet($offset)
 	{
 		return $this->record[$offset] ?? '';
 	}
 
-	public function offsetSet($offset, $value) 
+	public function offsetSet($offset, $value)
 	{
 		throw new Exception('not implemented');
 	}
 
-	public function offsetUnset ($offset) 
+	public function offsetUnset ($offset)
 	{
 		throw new Exception('not implemented');
-	}	
+	}
 }

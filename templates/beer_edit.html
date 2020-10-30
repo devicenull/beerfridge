@@ -10,7 +10,7 @@
 	<form method="POST">
 		<input type="hidden" name="action" value="update_beer">
 		<div class="form-group">
-			<label for="name">Beer Name</label>
+			<label for="name" required>Beer Name</label>
 			<input type="text" class="form-control" name="name" value="{{ beer.name }}">
 		</div>
 
@@ -27,17 +27,22 @@
 		<div class="form-group">
 			<label for="name">ABV</label>
 			<input type="number" step="any" class="form-control" name="abv" value="{{ beer.abv }}">
-		</div>		
+		</div>
 
 		<div class="form-group">
 			<label for="name">Style</label>
 			<input type="text" class="form-control" name="style" value="{{ beer.style }}">
-		</div>		
+		</div>
+
+		<div class="form-group">
+			<label for="name">UPC</label>
+			<input type="text" class="form-control" name="upc" value="{{ beer.upc }}" autocomplete="upc">
+		</div>
 
 		<div class="form-group">
 			<label for="name">Count Available</label>
 			<input type="number" class="form-control" name="count_available" value="{{ beer.count_available }}">
-		</div>		
+		</div>
 
 		{% if BEERID == "new" %}
 			<button class="btn btn-primary">Add</button>

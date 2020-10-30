@@ -1,10 +1,16 @@
 <?php
 require(__DIR__.'/../init.php');
 
-if (!isset($_REQUEST['BEERID']))
+if (!isset($_REQUEST['BEERID']) || $_REQUEST['BEERID'] == 'new')
 {
 	$BEERID = 'new';
 	$beer = new Beer();
+	if (isset($_REQUEST['upc']))
+	{
+		// cheating again - the barcode add process will set this before redirecting here
+		$beer->record['upc'] = $_REQUEST['upc'];
+		$beer->record['count_available'] = 1;
+	}
 }
 else
 {
