@@ -28,10 +28,11 @@ class Beer extends BaseDBObject
 	{
 		global $db;
 		$res = $db->Execute('
-			select *
+			select beer.*
 			from beer
+			left join brewery on beer.BREWERYID=brewery.BREWERYID
 			where count_available > 0
-			order by BREWERYID, style, name asc
+			order by style, brewery.name, name asc
 		');
 		$beers = [];
 		foreach ($res as $cur)
