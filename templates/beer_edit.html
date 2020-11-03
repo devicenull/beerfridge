@@ -1,6 +1,20 @@
 {% extends 'layout.html' %}
 
 {% block maincontent %}
+	<script>
+		function updateBrewery()
+		{
+			if ($('select[name=BREWERYID]').val() == 'new_brewery')
+			{
+				$('#new_brewery').show();
+			}
+			else
+			{
+				$('#new_brewery').hide();
+			}
+		}
+		$().ready(updateBrewery);
+	</script>
 	{% if BEERID == "new" %}
 	    <h1 class="mt-5">Add Beer</h1>
 	{% else %}
@@ -16,12 +30,19 @@
 
 		<div class="form-group">
 			<label for="name">Brewery</label>
-			<select class="form-control" name="BREWERYID">
+			<select class="form-control" name="BREWERYID" onchange="updateBrewery()">
+				{% if BEERID == "new" %}
+					<option value="new_brewery">New Brewery</option>
+				{% endif %}
 				{% for cur in breweries %}
 					<option value="{{ cur.BREWERYID }}" {% if cur.BREWERYID == beer.BREWERYID %}selected{% endif %}>{{ cur.name }}</option>
 				{% endfor %}
 			</select>
+		</div>
 
+		<div id="new_brewery" class="form-group">
+			<label for="new_brewery">New Brewery Name</label>
+			<input type="text" class="form-control" name="new_brewery">
 		</div>
 
 		<div class="form-group">

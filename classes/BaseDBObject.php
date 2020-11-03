@@ -91,6 +91,9 @@ class BaseDBObject implements ArrayAccess
 				return false;
 			}
 
+			$this->record = $params;
+			$this->record[$this->db_key] = $db->insert_Id();
+
 			return true;
 		}
 

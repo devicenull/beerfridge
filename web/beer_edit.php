@@ -31,8 +31,18 @@ if (isset($_POST['action']) && $_POST['action'] == 'update_beer')
 
 	if ($BEERID == 'new')
 	{
+		if ($params['BREWERYID'] == 'new_brewery')
+		{
+			$brewery = new Brewery();
+			$brewery->add([
+				'name' => $_POST['new_brewery'],
+			]);
+			$params['BREWERYID'] = $brewery['BREWERYID'];
+		}
+
 		if ($beer->add($params))
 		{
+			$_SESSION['last_beer'] = $beer['BEERID'];
 			displaySuccess('Added '.$params['name'], '/');
 		}
 		else

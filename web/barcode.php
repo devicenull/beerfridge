@@ -6,9 +6,6 @@ if ($_POST['action'] != 'scanned')
 	displayError('Invalid action', '/');
 }
 
-define('BARCODE_MODE_ADD', '111111');
-define('BARCODE_MODE_DEFAULT', '222');
-
 switch ($_POST['barcode'])
 {
 	case BARCODE_MODE_ADD:
@@ -29,6 +26,20 @@ switch ($_POST['barcode'])
 		unset($_SESSION['barcode_mode_changed']);
 		displaySuccess('Went back to default mode', '/');
 	break;
+
+	case BARCODE_ADD6_LASTBEER:
+	case BARCODE_ADD12_LASTBEER:
+		// these barcodes end with the # of beers to add (padded to 2 places)
+		if (!isset($_SESSION['last_beer']))
+		{
+			displayError('No beer scanned recently', '/');
+		}
+		$numadd = substr($_POST['barcode'], -2);
+
+		$beer = new Beer(['BEERID' => $_SESSION['last_beer']]);
+		$beer->set(['count_available' => $beer['count_available'] + $numadd]);
+		displaySuccess('Added '.$numadd.' to '.$beer['name'], '/');
+	break;
 }
 
 /**
@@ -41,6 +52,7 @@ if (isset($_SESSION['barcode_mode_changed']) && time() - $_SESSION['barcode_mode
 }
 
 $beer = Beer::getByUPC($_POST['barcode']);
+$_SESSION['last_beer'] = $beer['BEERID'];
 if (!$beer->isInitialized())
 {
 	displayError('Unknown beer, please add', '/beer_edit.php?BEERID=new&upc='.intVal($_POST['barcode']));

@@ -1,0 +1,25 @@
+{% extends 'layout.html' %}
+
+{% block maincontent %}
+    <h1 class="mt-5">Commands</h1>
+    <div id="barcode_commands">
+
+    </div>
+
+    <script src="/js/qrcode.min.js"></script>
+	<script>
+		var barcode_commands = {{ commands|raw }};
+		var i=0;
+		barcode_commands.forEach(function (data) {
+			var curcode = $('#barcode_commands').append('<label for="qrcode_'+i+'">'+data[1]+'</label><div id="qrcode_'+i+'" class="qrcode"></div>');
+			console.log($('#qrcode_'+i));
+			new QRCode($('#qrcode_'+i)[0], {
+				text: data[0],
+				width: 128,
+				height: 128,
+			});
+			console.log(data);
+			i += 1;
+		});
+	</script>
+{% endblock %}
