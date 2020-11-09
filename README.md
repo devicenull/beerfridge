@@ -1,8 +1,8 @@
 PHP app to keep track of inventory in my beer fridge.
 
-"supports" a USB barcode scanner to add/remove inventory.
+Supports a USB barcode scanner to add/remove inventory.
 
-If untappd ever approves me, I'll probably integrate with that.
+Untappd integration is there - sadly the current (2020-11-08) API doesn't appear to support searching by UPC, so we can't just auto-populate based on the scanned barcode.
 
 Not the greatest example of secure code, but if you're on my network I don't really care...
 
@@ -43,4 +43,5 @@ If this was a new barcode scanner to you, you should factory reset it with the f
 
 * define UNTAPPD_CLIENT_ID and UNTAPPD_CLIENT_SECRET in config.php
 * https://untappd.com/oauth/authenticate/?client_id=CLIENTID&response_type=code&redirect_url=http://path_to_app/auth.php
+** note: auth.php doesn't exist, all you need is the 'code' parameter from the URL
 * define UNTAPPD_USER_CODE from the auth output (untappd says this never expires)
