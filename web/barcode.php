@@ -66,5 +66,5 @@ else
 {
 	// default action - assume a beer has been drunk
 	$beer->set(['count_available' => $beer['count_available']-1]);
-	displaySuccess('Inventory updated', '/');
+	displaySuccess('Enjoy '.$beer['name'].'!', '/');
 }

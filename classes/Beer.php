@@ -9,6 +9,7 @@ class Beer extends BaseDBObject
 		'style',
 		'upc',
 		'count_available',
+		'untappd_id',
 	];
 	var $record = [];
 	var $db_key = 'BEERID';

@@ -13,6 +13,7 @@ $twig = new \Twig\Environment($loader, [
 require_once(__DIR__.'/classes/BaseDBObject.php');
 require_once(__DIR__.'/classes/Brewery.php');
 require_once(__DIR__.'/classes/Beer.php');
+require_once(__DIR__.'/classes/Untappd.php');
 
 require_once(__DIR__.'/config.php');
 

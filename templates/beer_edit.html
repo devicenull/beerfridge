@@ -13,7 +13,38 @@
 				$('#new_brewery').hide();
 			}
 		}
-		$().ready(updateBrewery);
+		$().ready(function () {
+			updateBrewery();
+			$('#search_untappd').select2({
+				ajax: {
+					url: '/_ajax/beersearch.php',
+					delay: 300,
+				}
+			});
+
+			$('#search_untappd').on('select2:select', function (e) {
+				var beer = e.params.data.beer;
+				console.log(beer);
+
+				$('input[name=name]').val(beer.beer_name);
+				$('input[name=abv]').val(beer.beer_abv);
+				$('input[name=style]').val(beer.beer_style);
+				$('input[name=untappd_id]').val(beer.bid);
+
+				if (beer.BREWERYID > 0)
+				{
+					$('select[name=BREWERYID]').val(beer.BREWERYID);
+					updateBrewery();
+				}
+				else
+				{
+					$('select[name=BREWERYID]').val('new_brewery');
+					$('input[name=new_brewery]').val(beer.brewery);
+					$('input[name=brewery_untappd_id]').val(beer.brewery_id);
+					updateBrewery();
+				}
+			});
+		});
 	</script>
 	{% if BEERID == "new" %}
 	    <h1 class="mt-5">Add Beer</h1>
@@ -23,6 +54,15 @@
 
 	<form method="POST">
 		<input type="hidden" name="action" value="update_beer">
+		{% if BEERID == "new" %}
+			<input type="hidden" name="untappd_id" value="0">
+			<input type="hidden" name="brewery_untappd_id" value="0">
+			<div class="form-group">
+				<label for="name" required>Search Untappd</label>
+				<select class="form-control" id="search_untappd" name="search_untappd"></select>
+			</div>
+		{% endif %}
+
 		<div class="form-group">
 			<label for="name" required>Beer Name</label>
 			<input type="text" class="form-control" name="name" value="{{ beer.name }}">

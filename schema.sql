@@ -30,9 +30,11 @@ CREATE TABLE `beer` (
   `style` varchar(255) DEFAULT '',
   `upc` bigint(16) unsigned DEFAULT NULL,
   `count_available` int(5) unsigned DEFAULT NULL,
+  `untappd_id` int(10) unsigned NOT NULL DEFAULT 0,
   PRIMARY KEY (`BEERID`),
-  KEY `brewery` (`BREWERYID`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+  KEY `brewery` (`BREWERYID`),
+  KEY `untappd_id` (`untappd_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -45,8 +47,10 @@ DROP TABLE IF EXISTS `brewery`;
 CREATE TABLE `brewery` (
   `BREWERYID` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`BREWERYID`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+  `untappd_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`BREWERYID`),
+  KEY `untappd_id` (`untappd_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -58,4 +62,4 @@ CREATE TABLE `brewery` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-10-29 20:59:26
+-- Dump completed on 2020-11-08 19:43:15

@@ -36,3 +36,11 @@ For the 3508, scan these in order:
 If this was a new barcode scanner to you, you should factory reset it with the following (before scanning all of the above):
 
 ![](images/factory_default.png)
+
+
+
+== Untappd API Setup ==
+
+* define UNTAPPD_CLIENT_ID and UNTAPPD_CLIENT_SECRET in config.php
+* https://untappd.com/oauth/authenticate/?client_id=CLIENTID&response_type=code&redirect_url=http://path_to_app/auth.php
+* define UNTAPPD_USER_CODE from the auth output (untappd says this never expires)

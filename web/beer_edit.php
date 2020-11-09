@@ -35,7 +35,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'update_beer')
 		{
 			$brewery = new Brewery();
 			$brewery->add([
-				'name' => $_POST['new_brewery'],
+				'name'       => $_POST['new_brewery'],
+				'untappd_id' => $_POST['brewery_untappd_id'],
 			]);
 			$params['BREWERYID'] = $brewery['BREWERYID'];
 		}
