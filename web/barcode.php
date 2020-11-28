@@ -27,8 +27,10 @@ switch ($_POST['barcode'])
 		displaySuccess('Went back to default mode', '/');
 	break;
 
-	case BARCODE_ADD6_LASTBEER:
-	case BARCODE_ADD12_LASTBEER:
+	case BARCODE_ADD3_LASTBEER:
+	case BARCODE_ADD4_LASTBEER:
+	case BARCODE_ADD5_LASTBEER:
+	case BARCODE_ADD11_LASTBEER:
 		// these barcodes end with the # of beers to add (padded to 2 places)
 		if (!isset($_SESSION['last_beer']))
 		{

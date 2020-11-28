@@ -1,8 +1,7 @@
 {% extends 'layout.html' %}
 
 {% block maincontent %}
-    <h1 class="mt-5">Beer Inventory</h1>
-    <table class="table">
+    <table class="table table-striped table-sm">
     	<thead>
     		<tr>
 	    		<th scope="col">Name</th>
@@ -10,7 +9,9 @@
 	    		<th scope="col">ABV</th>
 	    		<th scope="col">Style</th>
 	    		<th scope="col">#</th>
+	    		{% if showbuttons %}
 	    		<th scope="col"></th>
+	    		{% endif %}
 	    	</tr>
     	</thead>
     	<tbody>
@@ -21,6 +22,7 @@
     			<td scope="row">{{ cur.abv }}%</td>
     			<td scope="row">{{ cur.style }}</td>
     			<td scope="row">{{ cur.count_available }}</td>
+    			{% if showbuttons %}
     			<td scope="row">
     				<a class="btn btn-primary" href="/beer_edit.php?BEERID={{ cur.BEERID }}">edit</a>
     				<form style="display: inline" onsubmit="confirm('Are you sure you want to delete {{ cur.name }}?')" method="POST">
@@ -29,6 +31,7 @@
     					<button class="btn btn-danger">del</button>
     				</form>
     			</td>
+    			{% endif %}
     		</tr>
     		{% else %}
     		<tr>
@@ -37,6 +40,7 @@
     		{% endfor %}
 	    </tbody>
     </table>
+    {% if showbuttons %}
     <a href="/beer_edit.php?BEERID=new" class="btn btn-primary" style="float: right">Add Beer</a>
-
+    {% endif %}
 {% endblock %}

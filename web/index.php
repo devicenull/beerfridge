@@ -10,10 +10,12 @@ if (isset($_POST['action']) && $_POST['action'] == 'delete_beer')
 	}
 }
 
+
 $beers = Beer::getAvailable();
 
 $vars = [
-	'beers' => $beers,
+	'beers'       => $beers,
+	// My fridge uses a raspberry pi as a display, don't show edit/del buttons there
+	'showbuttons' => !stripos($_SERVER['USER_AGENT'], 'Raspbian'),
 ];
-
 displayPage('index.html', $vars);

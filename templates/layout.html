@@ -66,6 +66,11 @@
 					barcode += e.key;
 				}
 			});
+
+			// hide banners after awhile
+			setTimeout(function () {
+				$('.alert').hide();
+			}, 60*1000);
 		</script>
 	</head>
 	<body class="d-flex flex-column h-100">

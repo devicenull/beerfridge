@@ -27,8 +27,10 @@ define('BARCODE_MODE_ADD', '11111111111111');
 define('BARCODE_MODE_DEFAULT', '22222222222222');
 
 // final two numbers are the # of beers to add
+define('BARCODE_ADD3_LASTBEER', '33333333333303');
+define('BARCODE_ADD5_LASTBEER', '33333333333305');
 define('BARCODE_ADD6_LASTBEER', '33333333333306');
-define('BARCODE_ADD12_LASTBEER', '33333333333312');
+define('BARCODE_ADD11_LASTBEER', '33333333333311');
 
 function displayPage($template, $vars=[])
 {
