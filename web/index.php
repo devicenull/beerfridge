@@ -16,6 +16,6 @@ $beers = Beer::getAvailable();
 $vars = [
 	'beers'       => $beers,
 	// My fridge uses a raspberry pi as a display, don't show edit/del buttons there
-	'showbuttons' => !stripos($_SERVER['USER_AGENT'], 'Raspbian'),
+	'showbuttons' => !stripos($_SERVER['HTTP_USER_AGENT'], 'Raspbian'),
 ];
 displayPage('index.html', $vars);
