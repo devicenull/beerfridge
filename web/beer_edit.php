@@ -41,9 +41,33 @@ if (isset($_POST['action']) && $_POST['action'] == 'update_beer')
 			$params['BREWERYID'] = $brewery['BREWERYID'];
 		}
 
-		if ($beer->add($params))
+		/**
+		*	It's possible that one beer has multiple IDs - If we already
+		*	know about this beer, just add the UPC to the existing beer,
+		*	rather then adding another one
+		*/
+		$beer = Beer::getByUntappdId($_POST['untappd_id']);
+		if ($beer->isInitialized())
+		{
+			$upc = new UPC();
+			if ($upc->add([
+				'UPC'    => $_POST['upc'],
+				'BEERID' => $beer['BEERID'],
+			]))
+			{
+				$beer->set(['count_available' => $_POST['count_available']]);
+			}
+			displaySuccess('Added new UPC for '.$beer['name'], '/');
+		}
+		else if ($beer->add($params))
 		{
 			$_SESSION['last_beer'] = $beer['BEERID'];
+			$upc = new UPC();
+			$upc->add([
+				'UPC'    => $_POST['upc'],
+				'BEERID' => $beer['BEERID'],
+			]);
+
 			displaySuccess('Added '.$params['name'], '/');
 		}
 		else
@@ -70,5 +94,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'update_beer')
 displayPage('beer_edit.html', [
 	'beer'      => $beer,
 	'BEERID'    => $BEERID,
+	'upc'       => $_REQUEST['upc'] ?? '',
 	'breweries' => Brewery::getAll(),
 ]);

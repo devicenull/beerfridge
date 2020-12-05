@@ -7,11 +7,10 @@ class Beer extends BaseDBObject
 		'name',
 		'abv',
 		'style',
-		'upc',
 		'count_available',
 		'untappd_id',
 	];
-	var $record = [];
+
 	var $db_key = 'BEERID';
 	var $db_table = 'beer';
 
@@ -48,7 +47,26 @@ class Beer extends BaseDBObject
 	{
 		global $db;
 
-		$res = $db->Execute('select * from beer where upc=?', [$upc]);
+		$res = $db->Execute('
+			select *
+			from upc
+			left join beer on upc.BEERID=beer.BEERID
+			where upc.UPC=?',
+			[$upc]
+		);
+		if ($res->RecordCount() == 1)
+		{
+			return new Beer(['record' => $res->fields]);
+		}
+
+		return new Beer();
+	}
+
+	public static function getByUntappdID($id): Beer
+	{
+		global $db;
+
+		$res = $db->Execute('select * from beer where untappd_id=?', [$id]);
 		if ($res->RecordCount() == 1)
 		{
 			return new Beer(['record' => $res->fields]);

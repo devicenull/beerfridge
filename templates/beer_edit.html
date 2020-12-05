@@ -95,10 +95,13 @@
 			<input type="text" class="form-control" name="style" value="{{ beer.style }}">
 		</div>
 
+		{# one beer can have multiple UPCs, so this isn't supported during edit #}
+		{% if BEERID == "new" %}
 		<div class="form-group">
 			<label for="name">UPC</label>
-			<input type="text" class="form-control" name="upc" value="{{ beer.upc }}" autocomplete="upc">
+			<input type="text" class="form-control" name="upc" value="{{ upc }}" autocomplete="upc">
 		</div>
+		{% endif %}
 
 		<div class="form-group">
 			<label for="name">Count Available</label>
