@@ -28,7 +28,6 @@ switch ($_POST['barcode'])
 	break;
 
 	case BARCODE_ADD3_LASTBEER:
-	case BARCODE_ADD4_LASTBEER:
 	case BARCODE_ADD5_LASTBEER:
 	case BARCODE_ADD11_LASTBEER:
 		// these barcodes end with the # of beers to add (padded to 2 places)
@@ -67,6 +66,7 @@ else if (isset($_SESSION['barcode_mode']) && $_SESSION['barcode_mode'] == 'add')
 else
 {
 	// default action - assume a beer has been drunk
-	$beer->set(['count_available' => $beer['count_available']-1]);
+	$remaining = max($beer['count_available']-1, 0);
+	$beer->set(['count_available' => $remaining]);
 	displaySuccess('Enjoy '.$beer['name'].'!', '/');
 }
